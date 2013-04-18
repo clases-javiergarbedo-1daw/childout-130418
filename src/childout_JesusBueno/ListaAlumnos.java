@@ -4,7 +4,6 @@
  */
 package childout_JesusBueno;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -26,13 +25,11 @@ public class ListaAlumnos extends javax.swing.JPanel {
     int index;
     GestionAlumno gestionAlumno = new GestionAlumno();
     ArrayList<Alumno> listaAlumnosSeleccionada;
-    
-    
 
     public ListaAlumnos() {
         Conexion.conectar("localhost", "root", "");
-        initComponents();       
-        
+        initComponents();
+
         if (!java.beans.Beans.isDesignTime()) {
 
             int numElementos = gestionAlumno.findGrupos().size();
@@ -43,18 +40,17 @@ public class ListaAlumnos extends javax.swing.JPanel {
             jComboBox1.setModel(c);
             DefaultListModel model = new DefaultListModel();
             jList1.setModel(model);
-           this.listarDeNuevo();
+            this.listarDeNuevo();
 
         }
     }
-    private void listarDeNuevo(){
-     DefaultListModel listModel = new DefaultListModel();
-        Alumno alumno = null;
+
+    private void listarDeNuevo() {
+        DefaultListModel listModel = new DefaultListModel();
+
         String gruposSeleccionados = jComboBox1.getSelectedItem().toString();
         listaAlumnosSeleccionada = gestionAlumno.findByGrupo(gruposSeleccionados);
-        System.out.println(listaAlumnosSeleccionada.size());
         for (int i = 0; i < listaAlumnosSeleccionada.size(); i++) {
-           
             String nombreApellidos = listaAlumnosSeleccionada.get(i).getNombre();
             System.out.println(nombreApellidos);
 
@@ -64,7 +60,6 @@ public class ListaAlumnos extends javax.swing.JPanel {
         jList1.setModel(listModel);
 
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -155,28 +150,22 @@ public class ListaAlumnos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void suprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suprimirActionPerformed
-        
-        
-        
+
+
+
         try {
             if (!jList1.isSelectionEmpty()) {
                 index = jList1.getSelectedIndex();
-                System.out.println("Index: " + index);
                 Alumno alumno = listaAlumnosSeleccionada.get(index);
+                int numeroJoption = JOptionPane.showConfirmDialog(jComboBox1, "Estás seguro que deseas eliminar a " + alumno.getNombre(), "Confirmacion", JOptionPane.OK_CANCEL_OPTION);
+                if (numeroJoption == JOptionPane.OK_OPTION) {
 
-                int id_alumno = alumno.getId_alumno();
-                int numeroJoption =JOptionPane.showConfirmDialog(jComboBox1,"Estás seguro que deseas eliminar a "+alumno.getNombre(),"Confirmacion",JOptionPane.OK_CANCEL_OPTION);
-                if(numeroJoption==JOptionPane.OK_OPTION){
-                
-                String sql = "delete  from alumno where id_alumno = '" + id_alumno + "'";
+                    gestionAlumno.delete(alumno);
 
-                Statement sentenciaSQL = Conexion.conexion.createStatement();
-                sentenciaSQL.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-          
                 }
             }
-            
-        } catch (SQLException ex) {
+
+        } catch (Exception ex) {
             Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.listarDeNuevo();
@@ -185,7 +174,7 @@ public class ListaAlumnos extends javax.swing.JPanel {
     }//GEN-LAST:event_suprimirActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        this.listarDeNuevo();        
+        this.listarDeNuevo();
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -193,28 +182,29 @@ public class ListaAlumnos extends javax.swing.JPanel {
         JDialog Ventana_Detalles_Alumno = new JDialog();
         Ventana_Detalles_Alumno.setLocationRelativeTo(null);
         Ventana_Detalles_Alumno.setVisible(true);
+        Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
+        gestionAlumno.insert(alumnoNuevo);
 
-        // Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
 
     }//GEN-LAST:event_anadirActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         if (!jList1.isSelectionEmpty()) {
-            index = jList1.getSelectedIndex();
-            System.out.println("Index: " + index);
-            Alumno alumno = listaAlumnosSeleccionada.get(index);
-            System.out.println("Id del Alumno: " + alumno.getId_alumno());
+            index = jList1.getSelectedIndex();         
+            Alumno alumno = listaAlumnosSeleccionada.get(index);            
             JDialog Ventana_Detalles_Alumno = new JDialog();
-            //Ventana_Detalles_Alumno.setAlumno(alumno);
+            Ventana_Detalles_Alumno.setAlumno(alumno);
+
             Ventana_Detalles_Alumno.setLocationRelativeTo(null);
             Ventana_Detalles_Alumno.setVisible(true);
-            
 
-            // Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
+
+            Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
+            gestionAlumno.update(alumnoNuevo);
 
         }
-        
-       
+
+
 
 
         // TODO add your handling code here:

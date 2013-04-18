@@ -27,7 +27,7 @@ public class GestionAutorizado {
     private Blob firma;
     private String parentesco;
     private Blob huella;
-    private boolean denegado;
+    private int denegado;
     private int autoincrementoID;
     ResultSet rsLista = null;
     
@@ -41,16 +41,16 @@ public class GestionAutorizado {
             Statement sentenciaSQL = Conexion.conexion.createStatement();
             ResultSet rs = sentenciaSQL.executeQuery(sql);
             rs.first();
-            int id = rs.getInt("id_autorizado");
-            String nombre = rs.getString("nombre");
-            String apellidos = rs.getString("apellidos");
-            String email = rs.getString("email");
-            String telefono = rs.getString("telefono");
-            Blob foto = rs.getBlob("foto");
-            Blob firma = rs.getBlob("firma");
-            String parentesco = rs.getString("parentesco");
-            Blob huella = rs.getBlob("huella");
-            int denegado = rs.getInt("denegado");
+             id = rs.getInt("id_autorizado");
+             nombre = rs.getString("nombre");
+             apellidos = rs.getString("apellidos");
+             email = rs.getString("email");
+             telefono = rs.getString("telefono");
+            foto = rs.getBlob("foto");
+             firma = rs.getBlob("firma");
+             parentesco = rs.getString("parentesco");
+             huella = rs.getBlob("huella");
+            denegado = rs.getInt("denegado");
             
             Autorizado autorizado = new Autorizado( id,nombre, apellidos, email, telefono, dni, foto, firma, parentesco, huella, denegado);
             
@@ -67,21 +67,21 @@ public class GestionAutorizado {
     
     int Insert(Autorizado autorizado) {
         
-        int id = autorizado.getId();
-        String nombre = autorizado.getNombre();
-        String apellidos = autorizado.getApellidos();
-        String correo = autorizado.getCorreo();
-        String telefono = autorizado.getTelefono();
-        String dni = autorizado.getDni();
-        Blob foto = autorizado.getFoto();
-        Blob firma = autorizado.getFirma();
-        String parentesco = autorizado.getParentesco();
-        Blob huella = autorizado.getHuella();
-        int denegado = autorizado.getDenegado();
+        id = autorizado.getId();
+         nombre = autorizado.getNombre();
+         apellidos = autorizado.getApellidos();
+         email = autorizado.getCorreo();
+         telefono = autorizado.getTelefono();
+         dni = autorizado.getDni();
+         foto = autorizado.getFoto();
+        firma = autorizado.getFirma();
+         parentesco = autorizado.getParentesco();
+        huella = autorizado.getHuella();
+        denegado = autorizado.getDenegado();
         
         
         String sql = "INSERT INTO autorizado VALUES "
-                + "("+0+",'" + nombre + "','"+apellidos+ "','" + dni + "','" + correo + "','" + telefono + "','" + foto + "','" + firma + "','" + parentesco + "','" + huella + "','" + denegado + "')";
+                + "("+0+",'" + nombre + "','"+apellidos+ "','" + dni + "','" + email + "','" + telefono + "','" + foto + "','" + firma + "','" + parentesco + "','" + huella + "','" + denegado + "')";
         
         
         try {
