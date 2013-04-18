@@ -1,5 +1,3 @@
-package childout_jeronimo;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
