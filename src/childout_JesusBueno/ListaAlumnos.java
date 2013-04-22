@@ -182,8 +182,8 @@ public class ListaAlumnos extends javax.swing.JPanel {
         JDialog Ventana_Detalles_Alumno = new JDialog();
         Ventana_Detalles_Alumno.setLocationRelativeTo(null);
         Ventana_Detalles_Alumno.setVisible(true);
-        Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
-        gestionAlumno.insert(alumnoNuevo);
+        //Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
+        //gestionAlumno.insert(alumnoNuevo);
 
 
     }//GEN-LAST:event_anadirActionPerformed
@@ -193,14 +193,14 @@ public class ListaAlumnos extends javax.swing.JPanel {
             index = jList1.getSelectedIndex();         
             Alumno alumno = listaAlumnosSeleccionada.get(index);            
             JDialog Ventana_Detalles_Alumno = new JDialog();
-            Ventana_Detalles_Alumno.setAlumno(alumno);
+           // Ventana_Detalles_Alumno.setAlumno(alumno);
 
             Ventana_Detalles_Alumno.setLocationRelativeTo(null);
             Ventana_Detalles_Alumno.setVisible(true);
 
 
-            Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
-            gestionAlumno.update(alumnoNuevo);
+           // Alumno alumnoNuevo = Ventana_Detalles_Alumno.getAlumno();
+            //gestionAlumno.update(alumnoNuevo);
 
         }
 
